@@ -17,7 +17,7 @@
 
     - name: Instalação do git em sistemas centos/7
       yum:
-	name: git
+        name: git
         state: present
         when: ansible_facts['os_family'] == "centOS"
 
@@ -51,7 +51,5 @@
   tasks: 
     - name: Desligar máquinas por IP 
       ansible.builtin.command: /sbin/shutdown -t now
-      when: >
-      (ansible_facts['ansible_default_ipv4.address'] == "10.0.0.111") and
-      (ansible_facts['ansible_default_ipv4.address'] == "10.0.0.112")
+      when: (ansible_facts['ansible_default_ipv4.address'] == "10.0.0.111") and (ansible_facts['ansible_default_ipv4.address'] == "10.0.0.112")
 ...
