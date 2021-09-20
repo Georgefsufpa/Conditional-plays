@@ -1,0 +1,57 @@
+---
+- name: Realizando instalações
+  hosts: all
+  become: true
+  tasks:
+    
+    - name: Instalando pacotes em sistemas baseados em debian
+      apt:
+        name: {{ item }}
+        install_recommends: true
+        state: present
+        when: ansible_facts['os_family'] == "Debian"
+      loop:
+        - git 
+        - vim
+        - htop
+
+    - name: Instalação do git em sistemas centos/7
+      yum:
+	name: git
+        state: present
+        when: ansible_facts['os_family'] == "centOS"
+
+- name: criando um servidor
+  hosts: host3
+  become: true
+  tasks:
+    
+    - name: Instalando o nginx
+      apt:
+        name: nginx
+        state: present
+        install_recommends: no
+        update_cache: yes
+ 
+    - name: copiando arquivo de index.html
+      copy:
+        src: ./files/index.html
+        dest: /var/www/html/index.html
+      notify: reload nginx
+
+  handlers:
+    - name: reload nginx
+      systemd:
+        name: nginx
+        enabled: yes
+        state: reloaded
+
+- name: desligando...
+  hosts: all
+  tasks: 
+    - name: Desligar máquinas por IP 
+      ansible.builtin.command: /sbin/shutdown -t now
+      when: >
+      (ansible_facts['ansible_default_ipv4.address'] == "10.0.0.111") and
+      (ansible_facts['ansible_default_ipv4.address'] == "10.0.0.112")
+...
