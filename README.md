@@ -8,6 +8,20 @@ Necessario ter instalado:
 Para executar o script use o comando: 
 
 ```
-ansible-playbook playbook.yaml -i ./hosts <senha do usuario para o become>
+vagrant up
+```
+e depois:
 
+```
+ansible-playbook playbook.yaml -i ./hosts <senha do usuario para o become>
+```
+Para parar: 
+
+``` 
+vagrant halt
+````
+Para destruir: 
+
+```
+vagrant destroy
 ```
