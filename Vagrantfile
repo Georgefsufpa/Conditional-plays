@@ -26,10 +26,10 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "host3" do |host|
-    host.vm.box = "centos/7"
+    host.vm.box = "ubuntu/trusty64"
     host.vm.hostname = "host3"
     host.vm.network "private_network", ip: "10.0.0.110"
-    host.vm.provision "shell", inline: "sudo yum install ansible -y"
+    host.vm.provision "shell", inline: "sudo apt upgrade && sudo apt update && apt install ansible -y"
     host.vm.provider "virtualbox" do |vb|
         vb.name = "host3"
         vb.memory = "512"

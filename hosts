@@ -5,5 +5,5 @@ host3 ansible_host=10.0.0.110 ansible_ssh_private_key_file='.vagrant/machines/ho
 [debian]
 host[1:2]
 
-[centos]
+[ubuntu]
 host3

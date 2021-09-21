@@ -15,12 +15,6 @@
         - vim
         - htop
 
-    - name: Instalação do git em sistemas centos/7
-      yum:
-        name: git
-        state: present
-      when: ansible_facts['os_family'] == "centOS"
-
 - name: criando um servidor
   hosts: host2
   become: true
@@ -46,10 +40,11 @@
         enabled: yes
         state: reloaded
 
-- name: desligando...
-  hosts: all
+- name: Removendo pacotes
   tasks:
-    - name: Desligar máquinas por IP
-      ansible.builtin.command: /sbin/shutdown -t now
-      when: (ansible_facts['ansible_default_ipv4.address'] == "10.0.0.111")
+    - name: Removendo htop do Ubuntu
+      apt:
+        name: htop
+        state: absent
+      when: (ansible_facts['distribution_major_version'] == "18")
 ...
